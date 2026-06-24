@@ -50,6 +50,7 @@ NEGATIVE_WORDS = {
     "short",
     "weak",
 }
+SCORE_PRECISION = 3
 
 
 def build_query(symbol: str, extra_query: str | None) -> str:
@@ -94,6 +95,7 @@ def score_text(text: str) -> tuple[int, str]:
     """Return the net lexicon score and a positive/neutral/negative label."""
     score = 0
     for word in tokenize(text):
+        word = word.lstrip("$")
         if word in POSITIVE_WORDS:
             score += 1
         elif word in NEGATIVE_WORDS:
@@ -126,7 +128,11 @@ def analyze_posts(posts: list[dict]) -> dict:
         )
 
     total = len(scored_posts)
-    average_score = round(sum(item["score"] for item in scored_posts) / total, 3) if total > 0 else 0
+    average_score = (
+        round(sum(item["score"] for item in scored_posts) / total, SCORE_PRECISION)
+        if total > 0
+        else 0
+    )
     return {
         "summary": {
             "total_posts": total,
