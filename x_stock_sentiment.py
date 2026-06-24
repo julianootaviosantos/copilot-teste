@@ -68,7 +68,7 @@ def fetch_posts(query: str, max_results: int, bearer_token: str) -> list[dict]:
     request = urllib.request.Request(
         f"https://api.x.com/2/tweets/search/recent?{params}",
         headers={
-            "Authorization": f"******",
+            "Authorization": "Bearer " + bearer_token,
             "Content-Type": "application/json",
         },
     )
