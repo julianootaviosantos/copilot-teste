@@ -52,6 +52,7 @@ NEGATIVE_WORDS = {
     "weak",
 }
 SCORE_PRECISION = 3
+REQUEST_TIMEOUT_SECONDS = 30
 
 
 def build_query(symbol: str, extra_query: str | None) -> str:
@@ -76,7 +77,7 @@ def fetch_posts(query: str, max_results: int, bearer_token: str) -> list[dict]:
         },
     )
     try:
-        with urllib.request.urlopen(request, timeout=30) as response:
+        with urllib.request.urlopen(request, timeout=REQUEST_TIMEOUT_SECONDS) as response:
             payload = json.load(response)
     except urllib.error.HTTPError as exc:
         details = exc.read().decode("utf-8", errors="ignore")
