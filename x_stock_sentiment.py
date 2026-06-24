@@ -89,7 +89,7 @@ def fetch_posts(query: str, max_results: int, bearer_token: str) -> list[dict]:
 
 
 def tokenize(text: str) -> list[str]:
-    """Split text into lowercase words, preserving $ prefixes when they are present."""
+    """Split text into lowercase words and keep any leading ticker-style $ for later handling."""
     return re.findall(r"\$?[a-zA-Z']+", text.lower())
 
 
