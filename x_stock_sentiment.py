@@ -88,7 +88,7 @@ def fetch_posts(query: str, max_results: int, bearer_token: str) -> list[dict]:
 
 
 def tokenize(text: str) -> list[str]:
-    """Split text into lowercase words, keeping optional ticker-style $ prefixes."""
+    """Split text into lowercase words, preserving $ prefixes when they are present."""
     return re.findall(r"\$?[a-zA-Z']+", text.lower())
 
 
@@ -110,7 +110,7 @@ def score_text(text: str) -> tuple[int, str]:
 
 
 def analyze_posts(posts: list[dict]) -> dict[str, Any]:
-    """Return a summary block and per-post sentiment results."""
+    """Return a dict with 'summary' counts and a 'posts' list of scored post records."""
     labels = Counter()
     scored_posts = []
 
