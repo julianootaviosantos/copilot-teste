@@ -7,6 +7,7 @@ import sys
 import urllib.parse
 import urllib.request
 from collections import Counter
+from typing import Any
 
 POSITIVE_WORDS = {
     "beat",
@@ -108,7 +109,7 @@ def score_text(text: str) -> tuple[int, str]:
     return score, "neutral"
 
 
-def analyze_posts(posts: list[dict]) -> dict:
+def analyze_posts(posts: list[dict]) -> dict[str, Any]:
     """Return a summary block and per-post sentiment results."""
     labels = Counter()
     scored_posts = []
