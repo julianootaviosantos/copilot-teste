@@ -85,7 +85,7 @@ def fetch_posts(query: str, max_results: int, bearer_token: str) -> list[dict]:
 
 
 def tokenize(text: str) -> list[str]:
-    return re.findall(r"[a-zA-Z$']+", text.lower())
+    return re.findall(r"\$?[a-zA-Z']+", text.lower())
 
 
 def score_text(text: str) -> tuple[int, str]:
@@ -122,7 +122,7 @@ def analyze_posts(posts: list[dict]) -> dict:
         )
 
     total = len(scored_posts)
-    average_score = round(sum(item["score"] for item in scored_posts) / total, 3) if total else 0
+    average_score = round(sum(item["score"] for item in scored_posts) / total, 3) if scored_posts else 0
     return {
         "summary": {
             "total_posts": total,
