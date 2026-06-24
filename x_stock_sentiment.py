@@ -53,6 +53,7 @@ NEGATIVE_WORDS = {
 
 
 def build_query(symbol: str, extra_query: str | None) -> str:
+    """Build an X recent-search query for ticker mentions in English posts."""
     base = f"({symbol} OR ${symbol}) lang:en -is:retweet"
     return f"{base} {extra_query}".strip() if extra_query else base
 
@@ -85,10 +86,12 @@ def fetch_posts(query: str, max_results: int, bearer_token: str) -> list[dict]:
 
 
 def tokenize(text: str) -> list[str]:
+    """Split text into lowercase words, keeping optional ticker-style $ prefixes."""
     return re.findall(r"\$?[a-zA-Z']+", text.lower())
 
 
 def score_text(text: str) -> tuple[int, str]:
+    """Return the net lexicon score and a positive/neutral/negative label."""
     score = 0
     for word in tokenize(text):
         if word in POSITIVE_WORDS:
@@ -104,6 +107,7 @@ def score_text(text: str) -> tuple[int, str]:
 
 
 def analyze_posts(posts: list[dict]) -> dict:
+    """Return a summary block and per-post sentiment results."""
     labels = Counter()
     scored_posts = []
 
@@ -122,7 +126,7 @@ def analyze_posts(posts: list[dict]) -> dict:
         )
 
     total = len(scored_posts)
-    average_score = round(sum(item["score"] for item in scored_posts) / total, 3) if scored_posts else 0
+    average_score = round(sum(item["score"] for item in scored_posts) / total, 3) if total > 0 else 0
     return {
         "summary": {
             "total_posts": total,
