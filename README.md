@@ -13,13 +13,13 @@ export X_BEARER_TOKEN="your-token"
 Run the script with a ticker:
 
 ```bash
-python /home/runner/work/copilot-teste/copilot-teste/x_stock_sentiment.py AAPL
+python x_stock_sentiment.py AAPL
 ```
 
 Optional extra search filters:
 
 ```bash
-python /home/runner/work/copilot-teste/copilot-teste/x_stock_sentiment.py TSLA --query "earnings OR delivery" --max-results 50
+python x_stock_sentiment.py TSLA --query "earnings OR delivery" --max-results 50
 ```
 
 ## What it does
